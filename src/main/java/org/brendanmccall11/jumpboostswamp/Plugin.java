@@ -1,6 +1,5 @@
 package org.brendanmccall11.jumpboostswamp;
 
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
