@@ -34,7 +34,7 @@ public class Plugin implements Listener {
 
         if (isInSwamp(player) && isNight() && isFullMoon()) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost when player enters the swamp biome
-            player.spawnParticle(Particle.SLIME, player.getLocation(), 1);
+            player.spawnParticle(Particle.SLIME, player.getLocation(), 1); // Adds slime trail
         } else if (!isInSwamp(player)) {
             player.removePotionEffect(PotionEffectType.JUMP); // Removes jump boost when player enters the swamp biome
         }
