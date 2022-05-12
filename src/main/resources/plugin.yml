@@ -1,0 +1,6 @@
+name: JumpBoostSwamp
+version: '${version}'
+main: org.brendanmccall11.jumpboostswamp.JumpBoostSwamp
+api-version: 1.18
+authors: [ Beximite ]
+description: While a player is in a swamp biome during a full moon the player gets jump boost.
