@@ -8,22 +8,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import static org.bukkit.Bukkit.getPlayer;
 import static org.bukkit.Bukkit.getServer;
 
 public class Plugin implements Listener {
 
     public boolean isFullMoon () {
-
         long days = getServer().getWorld("world").getFullTime()/24000;
         long phase = days % 8;
         return phase == 0; // Tests if it is a full moon
     }
 
     public boolean isNight () {
-
         long time = getServer().getWorld("world").getTime();
         return time >= 13000 && time <= 23000; // Tests if it is nighttime
     }
