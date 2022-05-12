@@ -12,6 +12,8 @@ import static org.bukkit.Bukkit.getServer;
 
 public class Plugin implements Listener {
 
+    private boolean slimy; // Tests if the player is in the swamp or not
+
     public boolean isFullMoon () {
         long days = getServer().getWorld("world").getFullTime()/24000;
         long phase = days % 8;
@@ -31,11 +33,18 @@ public class Plugin implements Listener {
     public void main (PlayerMoveEvent event) {
 
         Player player = event.getPlayer();
+        boolean oldSlimy = slimy; // Tests if the slimy variable changes
 
         if (isInSwamp(player) && isNight() && isFullMoon()) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost when player enters the swamp biome
+            slimy = true;
             player.spawnParticle(Particle.SLIME, player.getLocation(), 1); // Add slime trail to player
-        } else if (!isInSwamp(player)) {
+        } else {
+            slimy = false;
+        }
+
+        if (!oldSlimy && slimy) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost when player enters the swamp biome
+        } else if (oldSlimy && !slimy) {
             player.removePotionEffect(PotionEffectType.JUMP); // Removes jump boost when player enters the swamp biome
         }
     }
