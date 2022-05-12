@@ -1,5 +1,6 @@
 package org.brendanmccall11.jumpboostswamp;
 
+import org.bukkit.Particle;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,7 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import static org.bukkit.Bukkit.getPlayer;
 import static org.bukkit.Bukkit.getServer;
 
 public class Plugin implements Listener {
@@ -32,10 +35,13 @@ public class Plugin implements Listener {
     @EventHandler
     public void main (PlayerMoveEvent event) {
 
-        if (isInSwamp(event.getPlayer()) && isNight() && isFullMoon()) {
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost when player enters the swamp biome
-        } else if (!isInSwamp(event.getPlayer())) {
-            event.getPlayer().removePotionEffect(PotionEffectType.JUMP); // Removes jump boost when player enters the swamp biome
+        Player player = event.getPlayer();
+
+        if (isInSwamp(player) && isNight() && isFullMoon()) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost when player enters the swamp biome
+            player.spawnParticle(Particle.SLIME, player.getLocation(), 1);
+        } else if (!isInSwamp(player)) {
+            player.removePotionEffect(PotionEffectType.JUMP); // Removes jump boost when player enters the swamp biome
         }
     }
 }
