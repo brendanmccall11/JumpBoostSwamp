@@ -13,5 +13,4 @@ public class JumpBoostSwamp extends JavaPlugin {
     public void onDisable() {
         // Do nothing
     }
-
 }
