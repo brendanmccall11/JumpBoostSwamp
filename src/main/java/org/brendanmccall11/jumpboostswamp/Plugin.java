@@ -8,11 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.HashMap;
+
 import static org.bukkit.Bukkit.getServer;
 
 public class Plugin implements Listener {
 
-    private boolean slimy; // Tests if the player is in the swamp or not
+    private HashMap<Player, Boolean> slimy = new HashMap<>();
 
     public boolean isFullMoon () {
         long days = getServer().getWorld("world").getFullTime()/24000;
@@ -33,18 +36,23 @@ public class Plugin implements Listener {
     public void main (PlayerMoveEvent event) {
 
         Player player = event.getPlayer();
-        boolean oldSlimy = slimy; // Tests if the slimy variable changes
 
-        if (isInSwamp(player) && isNight() && isFullMoon()) {
-            slimy = true;
-            player.spawnParticle(Particle.SLIME, player.getLocation(), 1); // Add slime trail to player
-        } else {
-            slimy = false;
+        if (!slimy.containsKey(player)) {
+            slimy.put(player, false);
         }
 
-        if (!oldSlimy && slimy) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost the moment a player enters the swamp biome
-        } else if (oldSlimy && !slimy) {
+        boolean oldSlimy = slimy.get(player); // Tests if the slimy variable changes
+
+        if (isInSwamp(player) && isNight() && isFullMoon()) {
+            slimy.put(player, true);
+            player.spawnParticle(Particle.SLIME, player.getLocation(), 2); // Add slime trail to player
+        } else {
+            slimy.put(player, false);
+        }
+
+        if (!oldSlimy && slimy.get(player)) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost the moment player enters the swamp biome
+        } else if (oldSlimy && !slimy.get(player)) {
             player.removePotionEffect(PotionEffectType.JUMP); // Remove jump boost the moment a player exits the swamp biome
         }
     }
