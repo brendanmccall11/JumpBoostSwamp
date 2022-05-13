@@ -43,9 +43,9 @@ public class Plugin implements Listener {
         }
 
         if (!oldSlimy && slimy) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost when player enters the swamp biome
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2)); // Add jump boost the moment a player enters the swamp biome
         } else if (oldSlimy && !slimy) {
-            player.removePotionEffect(PotionEffectType.JUMP); // Removes jump boost when player enters the swamp biome
+            player.removePotionEffect(PotionEffectType.JUMP); // Remove jump boost the moment a player exits the swamp biome
         }
     }
 }
